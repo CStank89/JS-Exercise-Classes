@@ -41,8 +41,33 @@ class Airplane {
 */
 
 class Person {
+  constructor(attributes){
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.stomach = [];
+    }    
+     
+    eat(someFood){
+     if (this.stomach.length < 10){
+       this.stomach.push(someFood);
+     } 
+    }
+
+    poop(){
+      this.staomch = [];
+    }
+    
+    toString(){
+      return `${this.name}, ${this.age}`;
+    }
 
 }
+
+const newPerson = new Person({
+  name: 'Toby',
+  age: 10,
+});
+
 
 /*
   TASK 2
@@ -59,9 +84,29 @@ class Person {
 */
 
 class Car {
+  constructor(attributes){
+    this.model = attributes.model;
+    this.milesPerGallon = attributes.milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank = this.tank += gallons;
+  }
 
+  drive(distance){
+    const range = this.tank * this.milesPerGallon;
+    if (distance > range) {
+      this.odometer = this.odometer + range;
+      this.tank = 0;
+      return `I ran out of fuel at ${range} miles!`;
+    } else {
+      this.odometer = this.odometer + distance;
+      this.tank = this.tank - distance / this.milesPerGallon;
+    }
+
+  }
 }
-
 /*
   TASK 3
     - Write a Lambdasian class.
@@ -75,8 +120,18 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
+  constructor(attributes){
+  this.name = attributes.name;
+  this.age = attributes.age;
+  this.location = attributes.location;
+  };
 
-}
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  };
+
+};
+
 
 /*
   TASK 4
@@ -92,9 +147,29 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian{
+  constructor(att){
+   super(att);  
+   this.speciality = att.speciality;
+   this.favLanguage = att.favLanguage;
+   this.catchPhrase = att.favLanguage;
+  }
+  demo(classSubject){
+  return `Today we learned about ${classSubject}`
+  }
+  grade(student, classSubject){
+  return `${student} reveives a perfect score on ${classSubject}`;
+  }
 }
+
+const instructor = new Instructor({
+  specialty: 'Redux',
+  favLanguage: 'JavaScript',
+  catchPhrase: 'Dont forget the homies',
+  });
+
+
+console.log(Instructor);
 
 /*
   TASK 5
@@ -111,9 +186,32 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian{
+  constructor(att){
+  super(att);
+  this.previousBackground = att.previousBackground;
+  this.className = att.className;
+  this.favSubjects = att.favSubjects;
+  }
+listSujects(att){
+  return `${att.student} has submitted a PR for ${att.subject}`;
 }
+PRAssignment(subject, student){
+  return `${student} has begun sprint challenge on ${subject}`;
+}
+}
+const student = new Student({
+  name: 'Christopher',
+  age: 31,
+  location: 'Nescopeck,Pa',
+  speciality: 'Taking notes',
+  favLanguage: 'Russian',
+  catchPhraseL: 'Never back down, Never give in',
+  previousBackground: 'Military vet',
+  className: 'WEB35',
+  favSubject: 'HTML, CSS, JAVASCRIPT',
+  grade: 80,
+})
 
 /*
   TASK 6
@@ -128,8 +226,18 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor{
+    constructor(childAttritubes){
+    super(childAttritubes);
+    this.gradClassName = childAttritubes.gradClassName;
+    this.favInstructor = childAttritubes.favLanguage;
+    }
+    standup(channel){
+      return `${name} announces to ${channel}. @channel standy times`
+    }
+    debugsCode(student, subject){
+      return `${name} debugs ${student.name}'s code on ${subject}`;
+    }
 }
 
 /*
@@ -148,9 +256,9 @@ if (typeof exports !== 'undefined') {
   module.exports = module.exports || {}
   if (Airplane) { module.exports.Airplane = Airplane }
   if (Person) { module.exports.Person = Person }
-  if (Car) { module.exports.Car = Car }
+  // if (Car) { module.exports.Car = Car }
   if (Lambdasian) { module.exports.Lambdasian = Lambdasian }
   if (Instructor) { module.exports.Instructor = Instructor }
   if (Student) { module.exports.Student = Student }
-  if (ProjectManager) { module.exports.ProjectManager = ProjectManager }
+  // if (ProjectManager) { module.exports.ProjectManager = ProjectManager }
 }
